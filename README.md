@@ -1,2 +1,1 @@
-# angular-complete-guide
-Angular Complete Guide
+# Angular Complete Guide
