@@ -1,6 +1,6 @@
 If you're in an Angular 17 project (and only then!), you can also use an alternative syntax for outputting conditional content:
 
-###ngIf vs @if
+### ngIf vs @if
 Instead of using *ngIf, you can use a built-in @if template control flow statement.
 ```
 @if (someCondition) {
@@ -15,7 +15,7 @@ The advantage of the new syntax is that it can be slightly more efficient under 
 
 Using it is entirely optional! It's also worth noting that this new syntax is only available in "Developer Preview" right now and therefore may change in the future!
 
-###ngFor vs @for
+### ngFor vs @for
 If you're in an Angular 17 project (and only then!), you can also use an alternative syntax for outputting conditional content:
 
 Instead of using *ngFor, you can use a built-in @for template control flow statement.
