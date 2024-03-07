@@ -20,23 +20,34 @@ import { CockpitComponent } from './cockpit/cockpit.component';
 })
 export class AppComponent {
   title = 'server-app-component-data-binding-app';
-  serverElements: any = [];
-  newServerName: string = '';
-  newServerContent: string = '';
-
-  onAddServer() {
-    this.serverElements.push({
+  serverElements: any = [
+    {
       type: 'server',
-      name: this.newServerName,
-      content: this.newServerContent
-    });
-  }
-
-  onAddBlueprint() {
-    this.serverElements.push({
+      name: 'New Server',
+      content: 'Server Content'
+    },
+    {
       type: 'blueprint',
-      name: this.newServerName,
-      content: this.newServerContent
-    });
-  }
+      name: 'New Server',
+      content: 'Server Content'
+    }
+  ];
+  // newServerName: string = '';
+  // newServerContent: string = '';
+
+  // onAddServer() {
+  //   this.serverElements.push({
+  //     type: 'server',
+  //     name: this.newServerName,
+  //     content: this.newServerContent
+  //   });
+  // }
+
+  // onAddBlueprint() {
+  //   this.serverElements.push({
+  //     type: 'blueprint',
+  //     name: this.newServerName,
+  //     content: this.newServerContent
+  //   });
+  // }
 }
