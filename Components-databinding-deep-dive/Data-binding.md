@@ -292,3 +292,53 @@ In Angular, you have several options for communication between components. The c
     ```
 
 Remember that the choice between these approaches depends on the specific requirements and structure of your Angular application. Consider the size of your application, the relationships between components, and the nature of the data or logic being shared when making these decisions.
+
+<br><br><hr><br>
+## 4. View Encapsulation
+View encapsulation in Angular refers to the way Angular manages the styles of components to prevent them from leaking or affecting other parts of the application. Angular provides three types of view encapsulation:
+
+1. **Emulated (default):**
+   - **Style Encapsulation:** Angular emulates the shadow DOM to encapsulate styles. It generates unique attributes for each component and attaches them to the DOM elements, ensuring that styles are scoped to the component.
+   - **How to Use:** This is the default behavior, and you don't need to explicitly specify it.
+
+   ```typescript
+   @Component({
+     selector: 'app-example',
+     template: '<p class="example">This is an example</p>',
+     styles: ['.example { color: red; }']
+   })
+   ```
+
+   In this example, the styles are scoped to the component using Angular's emulated encapsulation.
+
+2. **None:**
+   - **Style Encapsulation:** No style encapsulation is applied. Styles defined in the component can affect the global styles and can be affected by global styles.
+   - **How to Use:** Specify `encapsulation: ViewEncapsulation.None` in the `@Component` decorator.
+
+   ```typescript
+   @Component({
+     selector: 'app-example',
+     template: '<p class="example">This is an example</p>',
+     styles: ['.example { color: red; }'],
+     encapsulation: ViewEncapsulation.None
+   })
+   ```
+
+   Use this cautiously, as it may lead to unintended style clashes in larger applications.
+
+3. **ShadowDom:**
+   - **Style Encapsulation:** Utilizes the browser's native shadow DOM to encapsulate styles. It provides true isolation, but not all browsers support shadow DOM.
+   - **How to Use:** Specify `encapsulation: ViewEncapsulation.ShadowDom` in the `@Component` decorator.
+
+   ```typescript
+   @Component({
+     selector: 'app-example',
+     template: '<p class="example">This is an example</p>',
+     styles: ['.example { color: red; }'],
+     encapsulation: ViewEncapsulation.ShadowDom
+   })
+   ```
+
+   This is the most isolated form of style encapsulation, but it might not be supported in all environments.
+
+To summarize, view encapsulation in Angular ensures that styles defined in a component are scoped to that component, preventing unintended style collisions across different parts of your application. The default emulated encapsulation is often suitable for most applications, providing a good balance between isolation and browser compatibility.
