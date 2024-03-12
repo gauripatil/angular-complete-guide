@@ -507,3 +507,21 @@ Local template variables and `ngModel` serve different purposes in Angular, and 
 - **Local Template Variables:** Used for referencing elements or components within the template for one-time access or interaction.
 - **ngModel:** Used for establishing two-way data binding between a component property and an input element's value, commonly used in forms handling.
 
+
+## 8. @ViewChild in Angular8+
+@ViewChild() in Angular 8+
+In Angular 8+, the @ViewChild() syntax which you'll see in the next lecture needs to be changed slightly:
+
+Instead of:
+```html
+@ViewChild('serverContentInput') serverContentInput: ElementRef;
+```
+use
+```html
+@ViewChild('serverContentInput', {static: true}) serverContentInput: ElementRef;
+```
+The same change (add { static: true } as a second argument) needs to be applied to ALL usages of @ViewChild() (and also @ContentChild() which you'll learn about later) IF you plan on accessing the selected element inside of ngOnInit().
+
+If you DON'T access the selected element in ngOnInit (but anywhere else in your component), set static: false instead!
+
+If you're using Angular 9+, you only need to add { static: true } (if needed) but not { static: false }.
