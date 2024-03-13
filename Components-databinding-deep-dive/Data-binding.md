@@ -507,7 +507,7 @@ Local template variables and `ngModel` serve different purposes in Angular, and 
 - **Local Template Variables:** Used for referencing elements or components within the template for one-time access or interaction.
 - **ngModel:** Used for establishing two-way data binding between a component property and an input element's value, commonly used in forms handling.
 
-
+<br><br><hr><br>
 ## 8. @ViewChild in Angular8+
 @ViewChild() in Angular 8+
 In Angular 8+, the @ViewChild() syntax which you'll see in the next lecture needs to be changed slightly:
@@ -525,3 +525,105 @@ The same change (add { static: true } as a second argument) needs to be applied 
 If you DON'T access the selected element in ngOnInit (but anywhere else in your component), set static: false instead!
 
 If you're using Angular 9+, you only need to add { static: true } (if needed) but not { static: false }.
+
+<br><br><hr><br>
+## 9. @ViewChild in Angular8+ - All scenarios
+In Angular, `ViewChild` is used to query and access child components, directives, or elements from within a component class. While `ViewChild` primarily targets components and directives, it can also be used to access elements referenced by local template variables. Let's explore how to do this and cover various scenarios:
+
+### Scenario 1: Accessing DOM Elements with Local Template Variables
+
+**HTML Template:**
+```html
+<input #myInput type="text">
+<button (click)="logInputValue()">Log Value</button>
+```
+
+**Component Class:**
+```typescript
+import { Component, ViewChild, ElementRef } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  templateUrl: './example.component.html',
+})
+export class ExampleComponent {
+  @ViewChild('myInput', { static: true }) myInputRef: ElementRef;
+
+  logInputValue() {
+    console.log('Value of myInput:', this.myInputRef.nativeElement.value);
+  }
+}
+```
+
+**Explanation:**
+- In the HTML template, we define a text input element with a local template variable `#myInput`.
+- In the component class, we use `ViewChild` to query the input element referenced by the local template variable `myInput`.
+- We can then access properties or methods of the input element through `this.myInputRef.nativeElement`.
+
+### Scenario 2: Accessing Angular Components with Local Template Variables
+
+**HTML Template:**
+```html
+<app-child #childComponent></app-child>
+<button (click)="logChildValue()">Log Child Value</button>
+```
+
+**Component Class:**
+```typescript
+import { Component, ViewChild } from '@angular/core';
+import { ChildComponent } from './child.component';
+
+@Component({
+  selector: 'app-example',
+  templateUrl: './example.component.html',
+})
+export class ExampleComponent {
+  @ViewChild('childComponent', { static: true }) childComponent: ChildComponent;
+
+  logChildValue() {
+    console.log('Child Value:', this.childComponent.childValue);
+  }
+}
+```
+
+**Explanation:**
+- In the HTML template, we include a child component (`app-child`) with a local template variable `#childComponent`.
+- In the component class, we use `ViewChild` to query the child component referenced by the local template variable `childComponent`.
+- We can then access properties or methods of the child component through `this.childComponent`.
+
+### Scenario 3: Accessing DOM Elements with Template Reference Variable in Child Component
+
+**Child Component HTML Template:**
+```html
+<input #childInput type="text">
+```
+
+**Parent Component Class:**
+```typescript
+import { Component, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
+import { ChildComponent } from './child.component';
+
+@Component({
+  selector: 'app-example',
+  templateUrl: './example.component.html',
+})
+export class ExampleComponent implements AfterViewInit {
+  @ViewChild(ChildComponent, { static: true }) childComponent: ChildComponent;
+  @ViewChild('childInput', { static: true }) childInputRef: ElementRef;
+
+  ngAfterViewInit() {
+    console.log('Value of childInput:', this.childInputRef.nativeElement.value);
+  }
+}
+```
+
+**Explanation:**
+- In the child component's HTML template, we define a text input element with a local template variable `#childInput`.
+- In the parent component class, we use `ViewChild` to query the child component and the input element referenced by the local template variable.
+- We can then access properties or methods of the input element through `this.childInputRef.nativeElement`.
+
+### Summary:
+
+- `ViewChild` can be used to access DOM elements referenced by local template variables in Angular.
+- It allows us to interact with elements directly within the component class, enabling more complex interactions or manipulations.
+- `ViewChild` queries can target both Angular components/directives and DOM elements referenced by local template variables.
