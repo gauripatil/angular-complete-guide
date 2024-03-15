@@ -3,16 +3,7 @@
         class="panel panel-default">
         <div class="panel-heading">{{ element?.name }}</div>
         <div class="panel-body">
-          <p>
-            
-            @if(element?.type === 'server') {
-                <strong style="color: red">{{element?.content}}</strong>    
-            }
-
-            @if(element?.type === 'blueprint') {
-                <em style="color: blue"> {{element?.content}} </em>    
-            }
-          </p>
+          <ng-content></ng-content>
         </div>
       </div>
 </div>

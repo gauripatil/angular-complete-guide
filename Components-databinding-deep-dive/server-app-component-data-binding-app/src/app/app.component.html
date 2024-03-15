@@ -7,7 +7,18 @@
   <div class="row">
     <div class="col-xs-12">
       @for (server of serverElements; track server.name) {
-        <app-server [serverElem]="server"></app-server>
+        <app-server [serverElem]="server">
+          <p>
+            
+            @if(server?.type === 'server') {
+                <strong style="color: red">{{server?.content}}</strong>    
+            }
+
+            @if(server?.type === 'blueprint') {
+                <em style="color: blue"> {{server?.content}} </em>    
+            }
+          </p>
+        </app-server>
       }
     </div>
   </div>
