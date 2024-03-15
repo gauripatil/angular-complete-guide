@@ -627,3 +627,47 @@ export class ExampleComponent implements AfterViewInit {
 - `ViewChild` can be used to access DOM elements referenced by local template variables in Angular.
 - It allows us to interact with elements directly within the component class, enabling more complex interactions or manipulations.
 - `ViewChild` queries can target both Angular components/directives and DOM elements referenced by local template variables.
+
+## 9. ng-content
+The `ng-content` directive in Angular is used to project content from the parent component's template into the child component's template. It enables the creation of reusable components with flexible layouts, allowing the parent component to pass content dynamically into the child component. Let's explore `ng-content` with an example:
+
+### Example:
+
+Suppose we have a reusable card component that needs to display dynamic content such as a title and some body text. We want to be able to customize this content from the parent component.
+
+**card.component.html (Child Component):**
+```html
+<div class="card">
+  <div class="card-header">
+    <ng-content select=".card-title"></ng-content>
+  </div>
+  <div class="card-body">
+    <ng-content select=".card-body-content"></ng-content>
+  </div>
+</div>
+```
+
+In this child component template, we use `ng-content` to define slots where the parent component can pass content dynamically. The `select` attribute allows us to specify which content to project based on CSS selectors.
+
+**parent.component.html (Parent Component):**
+```html
+<app-card>
+  <div class="card-title">
+    <h2>Title of the Card</h2>
+  </div>
+  <div class="card-body-content">
+    <p>Body content goes here...</p>
+  </div>
+</app-card>
+```
+
+In the parent component template, we use the `app-card` component and provide the content we want to project into the card. We wrap the content we want to project into the slots defined by `ng-content` in the child component template.
+
+**Explanation:**
+- In the child component template, `<ng-content>` acts as placeholders where content from the parent component will be inserted.
+- We use CSS selectors with the `select` attribute to specify which content should be projected into each placeholder.
+- In the parent component template, we provide the content we want to project into the child component by placing it within the tags of the child component (`<app-card>` in this case).
+- The content provided in the parent component template is inserted into the corresponding slots in the child component template based on the CSS selectors specified in the `ng-content` directives.
+
+**Result:**
+The content provided in the parent component's template will be projected into the slots defined by `ng-content` in the child component's template. This allows for flexible composition of components, enabling reusability and customization of their layouts and content.
