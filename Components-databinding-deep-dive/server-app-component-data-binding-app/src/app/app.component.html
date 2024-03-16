@@ -10,7 +10,7 @@
       <button class="btn btn-danger" (click)="onDeleteFirst()">Change First Element</button>
       @for (server of serverElements; track server.name) {
         <app-server [name]="server.name" [serverElem]="server">
-          <p>
+          <p #contentParagraph>
             
             @if(server?.type === 'server') {
                 <strong style="color: red">{{server?.content}}</strong>    
