@@ -6,6 +6,7 @@
 2. ngStyle
 3. ngClass
 4. ngFor
+5. ngContent
 
 
 ### Property & Data Binding
