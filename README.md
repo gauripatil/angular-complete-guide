@@ -6,7 +6,7 @@
 2. ngStyle
 3. ngClass
 4. ngFor
-5. ngContent
+5. <a href="https://github.com/gauripatil/angular-complete-guide/blob/main/Components-databinding-deep-dive/ngContent.md">ngContent</a>
 
 
 ### Property & Data Binding
