@@ -28,8 +28,8 @@ export class AppComponent {
     },
     {
       type: 'blueprint',
-      name: 'New Server',
-      content: 'Server Content'
+      name: 'New Server 2',
+      content: 'Server Content 2'
     }
   ];
 
@@ -47,5 +47,13 @@ export class AppComponent {
       name: blueprintData.serverName,
       content: blueprintData.serverContent
     }); 
+  }
+
+  onChangeFirst() {
+    this.serverElements[0].name = "New Server - Changed";
+  }
+
+  onDeleteFirst() {
+    this.serverElements.splice(0, 1);
   }
 }

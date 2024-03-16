@@ -6,8 +6,10 @@
   <hr>
   <div class="row">
     <div class="col-xs-12">
+      <button class="btn btn-primary" (click)="onChangeFirst()">Change First Element</button>
+      <button class="btn btn-danger" (click)="onDeleteFirst()">Change First Element</button>
       @for (server of serverElements; track server.name) {
-        <app-server [serverElem]="server">
+        <app-server [name]="server.name" [serverElem]="server">
           <p>
             
             @if(server?.type === 'server') {
