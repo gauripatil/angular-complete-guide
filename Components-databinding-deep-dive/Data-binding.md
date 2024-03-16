@@ -673,6 +673,8 @@ In the parent component template, we use the `app-card` component and provide th
 **Result:**
 The content provided in the parent component's template will be projected into the slots defined by `ng-content` in the child component's template. This allows for flexible composition of components, enabling reusability and customization of their layouts and content.
 
+** Detailed explanation with all exaples & use case are given here - <a href="https://github.com/gauripatil/angular-complete-guide/blob/main/Components-databinding-deep-dive/ngContent.md">ngContent details</a>
+
 <br><br><hr><br>
 ## 11. Lifecycle hooks:
 ![Screenshot 2024-03-16 at 10 28 31 AM](https://github.com/gauripatil/angular-complete-guide/assets/3206551/6d7b5307-337e-4544-b01c-e7cc60f65d76)
