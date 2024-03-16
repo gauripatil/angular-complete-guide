@@ -628,7 +628,8 @@ export class ExampleComponent implements AfterViewInit {
 - It allows us to interact with elements directly within the component class, enabling more complex interactions or manipulations.
 - `ViewChild` queries can target both Angular components/directives and DOM elements referenced by local template variables.
 
-## 9. ng-content
+<br><br><hr><br>
+## 10. ng-content
 The `ng-content` directive in Angular is used to project content from the parent component's template into the child component's template. It enables the creation of reusable components with flexible layouts, allowing the parent component to pass content dynamically into the child component. Let's explore `ng-content` with an example:
 
 ### Example:
@@ -671,3 +672,57 @@ In the parent component template, we use the `app-card` component and provide th
 
 **Result:**
 The content provided in the parent component's template will be projected into the slots defined by `ng-content` in the child component's template. This allows for flexible composition of components, enabling reusability and customization of their layouts and content.
+
+<br><br><hr><br>
+## 11. Lifecycle hooks:
+![Screenshot 2024-03-16 at 10 28 31 AM](https://github.com/gauripatil/angular-complete-guide/assets/3206551/6d7b5307-337e-4544-b01c-e7cc60f65d76)
+
+Angular provides several lifecycle hooks that allow you to tap into different stages of a component or directive's lifecycle. These hooks provide you with the ability to perform certain actions at specific points during the component's creation, rendering, and destruction processes. Here's an explanation of each lifecycle hook:
+
+### 1. ngOnChanges
+- **Purpose:** Called when the data-bound input properties of a component change.
+- **Usage:** Use this hook to perform operations whenever the input properties of the component change.
+- **Signature:** `ngOnChanges(changes: SimpleChanges): void`
+
+### 2. ngOnInit
+- **Purpose:** Called once, after the first `ngOnChanges` and `ngOnInit` have run.
+- **Usage:** Use this hook to perform initialization tasks for the component.
+- **Signature:** `ngOnInit(): void`
+
+### 3. ngDoCheck
+- **Purpose:** Called during every change detection run, immediately after `ngOnChanges` and `ngOnInit`.
+- **Usage:** Use this hook to implement custom change detection.
+- **Signature:** `ngDoCheck(): void`
+
+### 4. ngAfterContentInit
+- **Purpose:** Called after Angular projects external content into the component's view.
+- **Usage:** Use this hook to perform initialization tasks related to the content projected into the component.
+- **Signature:** `ngAfterContentInit(): void`
+
+### 5. ngAfterContentChecked
+- **Purpose:** Called after Angular checks the content projected into the component.
+- **Usage:** Use this hook to perform additional checks or operations after Angular has checked the projected content.
+- **Signature:** `ngAfterContentChecked(): void`
+
+### 6. ngAfterViewInit
+- **Purpose:** Called after Angular initializes the component's views and child views.
+- **Usage:** Use this hook to perform initialization tasks related to the component's view or its child views.
+- **Signature:** `ngAfterViewInit(): void`
+
+### 7. ngAfterViewChecked
+- **Purpose:** Called after Angular checks the component's views and child views.
+- **Usage:** Use this hook to perform additional checks or operations after Angular has checked the component's views and child views.
+- **Signature:** `ngAfterViewChecked(): void`
+
+### 8. ngOnDestroy
+- **Purpose:** Called just before Angular destroys the component.
+- **Usage:** Use this hook to perform cleanup tasks such as unsubscribing from observables or detaching event handlers to prevent memory leaks.
+- **Signature:** `ngOnDestroy(): void`
+
+### Summary:
+- **Initialization:** `ngOnChanges`, `ngOnInit`, `ngDoCheck`, `ngAfterContentInit`, `ngAfterViewInit` are used for initialization tasks.
+- **Change Detection:** `ngOnChanges`, `ngDoCheck`, `ngAfterContentChecked`, `ngAfterViewChecked` are involved in change detection and content projection.
+- **Cleanup:** `ngOnDestroy` is used for cleanup tasks.
+
+These lifecycle hooks give you fine-grained control over your component's behavior at different stages of its lifecycle, allowing you to manage state, perform side effects, and optimize performance effectively.
+
