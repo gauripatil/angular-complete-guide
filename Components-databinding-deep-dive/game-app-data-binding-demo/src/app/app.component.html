@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="row">
+    <app-game-control (numberIncrement)="onIncrement($event)"></app-game-control>
+  </div>
+
+  @for(evenNumber of evenNumbers; track evenNumbers) {
+      <app-even [number]="evenNumber"></app-even>
+  }
+
+  @for(oddNumber of oddNumbers; track oddNumbers) {
+      <app-odd [number]="oddNumber"></app-odd>
+  }
+</div>
