@@ -7,10 +7,10 @@ import { Component, EventEmitter, Output } from "@angular/core";
 })
 export class HeaderComponent {
 
-    @Output() linkClick = new EventEmitter<string>();
+    @Output() featureSelected = new EventEmitter<string>();
 
-    onLinkClicked(linkSelected: string): void {
-        this.linkClick.emit(linkSelected);
+    onSelect(feature: string): void {
+        this.featureSelected.emit(feature);
     }
 
 }

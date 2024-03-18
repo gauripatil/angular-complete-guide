@@ -18,10 +18,10 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 })
 export class AppComponent {
   title = 'shopping-recipe-course-basics';
-  selectedLink: string = '';
+  featureLoaded: string = 'recipe';
 
-  onHeaderLinkSelection(linkData: string): void {
-    this.selectedLink = linkData;
-    console.log('onHeaderLinkSelection > ', linkData);
+  onNavigate(feature: string): void {
+    this.featureLoaded = feature;
+    console.log('onHeaderLinkSelection > ', feature);
   }
 }
