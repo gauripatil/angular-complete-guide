@@ -1,9 +1,14 @@
-<app-header></app-header>
+<app-header (linkClick)="onHeaderLinkSelection($event)"></app-header>
 <div class="container">
     <div class="row">
         <div class="col-md3">
-            <app-recipes></app-recipes>
-            <app-shopping-list></app-shopping-list>
+            @if(selectedLink == 'recipes'){
+                <app-recipes></app-recipes>
+            }
+            
+            @if(selectedLink == 'shopping-list'){
+                <app-shopping-list></app-shopping-list>
+            }
         </div>
     </div>
 </div>

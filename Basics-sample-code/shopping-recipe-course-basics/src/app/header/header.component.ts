@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 
 @Component({
     selector: 'app-header',
@@ -6,5 +6,11 @@ import { Component } from "@angular/core";
     standalone: true
 })
 export class HeaderComponent {
+
+    @Output() linkClick = new EventEmitter<string>();
+
+    onLinkClicked(linkSelected: string): void {
+        this.linkClick.emit(linkSelected);
+    }
 
 }
