@@ -3,7 +3,17 @@ Angular provides a powerful feature known as data binding, which establishes a c
 
 ## 1. In-built property & event binding
 <details>
-   <summary>In-built property & event binding</summary>
+   <summary>
+   
+   <ul>
+     <li>Interpolation</li>
+      <li>Property Binding</li>
+      <li>Event Binding</li>
+      <li>Two-way Binding</li>  
+   </ul>
+      
+   </summary>
+   
 1. **Interpolation (`{{ expression }}`):**
    - Interpolation is a one-way data binding from the component to the view (DOM).
    - It allows you to embed expressions within double curly braces `{{ }}` in the HTML template.
@@ -51,8 +61,20 @@ Angular provides a powerful feature known as data binding, which establishes a c
 To use two-way binding (`ngModel`), make sure to import the `FormsModule` in your Angular module.
 </details>
 
-<br><br><hr><br>
+<br><hr><br>
 ## 2. Custom property & event binding
+
+<details>
+   <summary>
+   
+   <ul>
+     <li>Custom Property Binding</li>
+      <li>Custom Event Binding</li>
+   </ul>
+      
+   </summary>
+
+   
 In addition to the standard forms of data binding in Angular (interpolation, property binding, event binding, and two-way binding), you can create custom property and event bindings in your components to communicate between parent and child components. Let's explore these concepts:
 
 ### Custom Property Binding:
@@ -131,7 +153,9 @@ In this example, the `ChildComponent` emits a custom event named `messageEvent` 
 
 Custom property and event bindings provide a flexible way to establish communication between components in an Angular application.
 
-<br><br><hr><br>
+</details>
+
+<br><hr><br>
 ## 3. Comparison - Input/Output VS Services VS Combination of both Input/Output & Services
 In Angular, you have several options for communication between components. The choice between Input/Output (using `@Input` and `@Output`), services, or a combination of both depends on the specific requirements and structure of your application. Here are some considerations for each approach:
 
