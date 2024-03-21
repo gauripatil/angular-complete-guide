@@ -1,6 +1,9 @@
 Angular provides a powerful feature known as data binding, which establishes a connection between the components of your application and the DOM. There are four types of data binding in Angular:
 
+
 ## 1. In-built property & event binding
+<details>
+   <summary>In-built property & event binding</summary>
 1. **Interpolation (`{{ expression }}`):**
    - Interpolation is a one-way data binding from the component to the view (DOM).
    - It allows you to embed expressions within double curly braces `{{ }}` in the HTML template.
@@ -46,7 +49,7 @@ Angular provides a powerful feature known as data binding, which establishes a c
      Here, changes to the `username` property in the component are reflected in the input field, and changes in the input field are automatically updated in the component.
 
 To use two-way binding (`ngModel`), make sure to import the `FormsModule` in your Angular module.
-
+<details>
 <br><br><hr><br>
 ## 2. Custom property & event binding
 In addition to the standard forms of data binding in Angular (interpolation, property binding, event binding, and two-way binding), you can create custom property and event bindings in your components to communicate between parent and child components. Let's explore these concepts:
