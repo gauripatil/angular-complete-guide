@@ -15,9 +15,12 @@ import { Ingredient } from '../shared/ingredient.model';
 export class ShoppingListComponent {
 
   ingredients: Ingredient[] = [
-    new Ingredient("Ingredient 1", "1000"),
-    new Ingredient("Ingredient 2", "2000"),
-    new Ingredient("Ingredient 3", "3000")
+    new Ingredient("Apple", "10"),
+    new Ingredient("Banana", "5")
   ];
+
+  onIngredientAdded(ingredient: Ingredient): void {
+    this.ingredients.push(ingredient);
+  }
 
 }
