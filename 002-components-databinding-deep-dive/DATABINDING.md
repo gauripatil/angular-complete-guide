@@ -1,7 +1,7 @@
 
 
 
-## 1. Four Types of Data Binding 
+## 1. Four Types of Data Binding - Within same component
 <details>
    <summary>
    
@@ -64,7 +64,7 @@ To use two-way binding (`ngModel`), make sure to import the `FormsModule` in you
 </details>
 
 <br><hr><br>
-## 2. Custom property & event binding
+## 2. Custom property & event binding  - Parent Child Communication
 
 <details>
    <summary>
