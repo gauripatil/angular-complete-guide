@@ -156,7 +156,20 @@ Custom property and event bindings provide a flexible way to establish communica
 </details>
 
 <br><hr><br>
-## 3. Comparison - Input/Output VS Services VS Combination of both Input/Output & Services
+## 3. Comparison - Ways of communication between components
+
+<details>
+   <summary>
+   
+   <ul>
+     <li>Input/Output (Using `@Input` and `@Output`)</li>
+      <li>Services</li>
+      <li>Combination of Input/Output and Services</li>
+   </ul>
+      
+   </summary>
+   
+
 In Angular, you have several options for communication between components. The choice between Input/Output (using `@Input` and `@Output`), services, or a combination of both depends on the specific requirements and structure of your application. Here are some considerations for each approach:
 
 ### 1. **Input/Output (Using `@Input` and `@Output`):**
