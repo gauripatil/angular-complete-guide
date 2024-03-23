@@ -1,7 +1,7 @@
-Angular provides a powerful feature known as data binding, which establishes a connection between the components of your application and the DOM. There are four types of data binding in Angular:
 
 
-## 1. In-built property & event binding
+
+## 1. Four Types of Data Binding 
 <details>
    <summary>
    
@@ -13,6 +13,8 @@ Angular provides a powerful feature known as data binding, which establishes a c
    </ul>
       
    </summary>
+
+Angular provides a powerful feature known as data binding, which establishes a connection between the components of your application and the DOM. There are four types of data binding in Angular:
    
 1. **Interpolation (`{{ expression }}`):**
    - Interpolation is a one-way data binding from the component to the view (DOM).
