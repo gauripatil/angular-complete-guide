@@ -334,7 +334,10 @@ In Angular, you have several options for communication between components. The c
 
 Remember that the choice between these approaches depends on the specific requirements and structure of your Angular application. Consider the size of your application, the relationships between components, and the nature of the data or logic being shared when making these decisions.
 
-<br><br><hr><br>
+</details>
+
+<br><hr><br>
+
 ## 4. View Encapsulation
 View encapsulation in Angular refers to the way Angular manages the styles of components to prevent them from leaking or affecting other parts of the application. Angular provides three types of view encapsulation:
 
