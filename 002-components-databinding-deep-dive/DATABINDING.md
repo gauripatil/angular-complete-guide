@@ -473,7 +473,21 @@ In most cases, emulated view encapsulation is sufficient for Angular application
 </details>
 
 <br><hr><br>
-## 6. Local template Variables
+## 6. Local template Variables & usages
+
+
+<details>
+   <summary>
+   
+   <ul>
+      <li>Accessing DOM Elements or Directives</li>
+      <li>Accessing Angular Components or Directives</li>
+      <li>Using Template Variables with Structural Directives</li>
+      <li>Using Template Variables with ngModel</li>
+      
+   </ul>
+      
+   </summary>
 Local template variables in Angular allow you to reference elements or directives within a template and perform actions with them, such as accessing their properties or calling methods. These variables are defined using the `#` symbol followed by a name, and they can only be accessed within the template where they are defined. Here's how you can use local template variables in Angular:
 
 ### Accessing DOM Elements or Directives:
@@ -524,7 +538,10 @@ In this case, `#inputField` references the input element, and `[(ngModel)]="inpu
 Local template variables in Angular provide a convenient way to reference elements, components, or directives within a template and interact with them directly. They are especially useful for accessing DOM elements, calling methods on components, or working with structural directives like `*ngFor`. Remember that these variables are local to the template and cannot be accessed outside of it.
 
 
-<br><br><hr><br>
+
+</details>
+
+<br><hr><br>
 ## 7. Local template Variables VS ngModel
 
 Local template variables and `ngModel` serve different purposes in Angular, and the choice between them depends on the specific requirements of your application. Let's compare them and discuss when to use each:
