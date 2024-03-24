@@ -66,3 +66,44 @@ When using the Renderer, Angular handles any platform-specific details internall
 
 </details>
 <br><hr><br>
+
+## 3. Why to use Renderer?
+
+<details>
+   <summary>
+   
+   <ul>
+     <li>Platform Independence</li>
+      <li>Security</li>
+      <li>Performance Optimization</li>
+      <li>Angular Compatibility</li>
+      <li>Testability</li>
+   </ul>
+      
+   </summary>
+
+   
+Using the Renderer in Angular attribute directives provides a platform-independent way to interact with the DOM, ensuring compatibility across different environments, including server-side rendering (SSR) and web workers. Here are some reasons why you should use the Renderer in attribute directives:
+
+1. **Platform Independence:**
+   - The Renderer abstracts away direct DOM manipulation, providing a layer of indirection that Angular can use to interact with the DOM.
+   - This abstraction ensures that your code works consistently across different platforms and environments, including browsers, servers (for server-side rendering), and web workers.
+   
+2. **Security:**
+   - Using the Renderer helps prevent security vulnerabilities such as cross-site scripting (XSS) attacks by ensuring that values are properly sanitized and escaped before being rendered in the DOM.
+   - The Renderer automatically handles security concerns like sanitizing user input and preventing direct access to the underlying DOM, reducing the risk of introducing security vulnerabilities.
+
+3. **Performance Optimization:**
+   - The Renderer optimizes DOM manipulations under the hood, leveraging Angular's change detection mechanism to batch and efficiently apply changes to the DOM.
+   - This optimization improves the performance of your application by reducing unnecessary DOM updates and ensuring that changes are applied in an optimal way.
+
+4. **Angular Compatibility:**
+   - Using the Renderer aligns with Angular's philosophy of separation of concerns and abstraction of platform-specific details.
+   - It ensures that your code follows Angular best practices and integrates seamlessly with the Angular framework, making it easier to maintain and update in the future.
+
+5. **Testability:**
+   - The Renderer facilitates unit testing of your directive by providing a mock implementation that can be used in testing environments.
+   - You can easily mock the Renderer in unit tests to isolate and test the behavior of your directive without relying on the actual DOM.
+
+Overall, using the Renderer in attribute directives helps ensure platform independence, security, performance optimization, Angular compatibility, and testability, making your code more robust and maintainable in the long run.
+</details>
