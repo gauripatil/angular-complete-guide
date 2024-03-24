@@ -341,6 +341,18 @@ Remember that the choice between these approaches depends on the specific requir
 <br><hr><br>
 
 ## 4. View Encapsulation
+
+<details>
+   <summary>
+   
+   <ul>
+     <li>Emulated (default)</li>
+      <li>None</li>
+      <li>ShadowDom</li>
+   </ul>
+      
+   </summary>
+
 View encapsulation in Angular refers to the way Angular manages the styles of components to prevent them from leaking or affecting other parts of the application. Angular provides three types of view encapsulation:
 
 1. **Emulated (default):**
@@ -389,9 +401,20 @@ View encapsulation in Angular refers to the way Angular manages the styles of co
 
 To summarize, view encapsulation in Angular ensures that styles defined in a component are scoped to that component, preventing unintended style collisions across different parts of your application. The default emulated encapsulation is often suitable for most applications, providing a good balance between isolation and browser compatibility.
 
+</details>
 
-<br><br><hr><br>
-## 5. Emulated Vs ShadowDom view encapsulation
+<br><hr><br>
+## 5. Compare - Emulated Vs ShadowDom view encapsulation
+
+<details>
+   <summary>
+   
+   <ul>
+     <li>Shadow DOM View Encapsulation</li>
+      <li>Emulated View Encapsulation</li>
+   </ul>
+      
+   </summary>
 Shadow DOM and Emulated View Encapsulation are two techniques used in Angular for styling components and preventing style leakage or conflicts. Let's explore the differences between these two approaches:
 
 ### Shadow DOM:
@@ -447,7 +470,9 @@ Shadow DOM and Emulated View Encapsulation are two techniques used in Angular fo
 
 In most cases, emulated view encapsulation is sufficient for Angular applications. It provides a good balance between isolation and browser compatibility. However, if your application specifically targets browsers with full Shadow DOM support, or if you are building web components, you may choose to use native Shadow DOM for enhanced encapsulation.
 
-<br><br><hr><br>
+</details>
+
+<br><hr><br>
 ## 6. Local template Variables
 Local template variables in Angular allow you to reference elements or directives within a template and perform actions with them, such as accessing their properties or calling methods. These variables are defined using the `#` symbol followed by a name, and they can only be accessed within the template where they are defined. Here's how you can use local template variables in Angular:
 
