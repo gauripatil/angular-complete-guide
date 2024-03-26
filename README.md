@@ -1,6 +1,6 @@
 ## Angular Complete Guide
 
-### built-in directives 
+### Built-in directives 
 
 1. ngIf
 2. ngStyle
