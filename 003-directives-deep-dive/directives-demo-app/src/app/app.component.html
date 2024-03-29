@@ -27,6 +27,20 @@
             }
           </div>
         }
+
+        <!-- What happens behind the scens of structural directives. Similar code is belew-->
+        <!-- START -->
+        <ng-template [ngIf]="!onlyOdd">
+          <div>
+            @for(even of evenNumbers; track even)  {
+                <li 
+                [ngClass]="{oddCls: even % 2 !== 0}" 
+                [ngStyle]="{backgroundColor: even % 2 !== 0 ? 'yellow' : 'transparent'}"
+                class="list-group-item">{{even}}</li>
+            }
+          </div>
+        </ng-template>
+        <!-- END -->
         
       </ul>
       <ng-template [ngIf]="onlyOdd">
