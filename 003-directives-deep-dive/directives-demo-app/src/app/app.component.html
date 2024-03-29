@@ -63,4 +63,11 @@
   <p appBasicHighlight>Style me with basic highlight directive</p>
   <p appBetterHighlight [highlightColor]="'red'" [defaultColor]="'yellow'">Style me with better highlight directive</p>
   <p appBetterHighlight >Style me with better highlight directive without properties</p>
+
+  <div [ngSwitch]="value">
+    <p *ngSwitchCase="5">Value is 5</p>
+    <p *ngSwitchCase="10">Value is 10</p>
+    <p *ngSwitchCase="15">Value is 2</p>
+    <p *ngSwitchDefault>Default value</p>
+  </div>
 </div>
