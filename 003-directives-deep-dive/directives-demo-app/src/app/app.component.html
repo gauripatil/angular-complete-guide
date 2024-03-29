@@ -17,7 +17,18 @@
           </div>
         }
 
-        @if(!onlyOdd) {
+        <!-- USING OWN CUSTOM STRUCTURAL  DIRECTIVE -->
+        <div *appUnless="onlyOdd">
+            @for(even of evenNumbers; track even)  {
+                <li 
+                [ngClass]="{oddCls: even % 2 !== 0}" 
+                [ngStyle]="{backgroundColor: even % 2 !== 0 ? 'yellow' : 'transparent'}"
+                class="list-group-item">{{even}}</li>
+            }
+          </div>
+        
+
+        <!-- @if(!onlyOdd) {
           <div>
             @for(even of evenNumbers; track even)  {
                 <li 
@@ -26,8 +37,9 @@
                 class="list-group-item">{{even}}</li>
             }
           </div>
-        }
-
+        } -->
+        
+        
         <!-- What happens behind the scens of structural directives. Similar code is belew-->
         <!-- START -->
         <ng-template [ngIf]="!onlyOdd">
