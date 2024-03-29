@@ -107,3 +107,84 @@ Using the Renderer in Angular attribute directives provides a platform-independe
 
 Overall, using the Renderer in attribute directives helps ensure platform independence, security, performance optimization, Angular compatibility, and testability, making your code more robust and maintainable in the long run.
 </details>
+
+
+## 4. HostBinding & HostListner
+<details>
+   <summary>
+   
+   <ul>
+     <li>HostBinding - Purpose, Usage & example</li>
+      <li>HostListner - Purpose, Usage & example</li>
+   </ul>
+      
+   </summary>
+
+   Certainly! `@HostBinding` and `@HostListener` are decorators provided by Angular that are commonly used in directives to bind properties or listen to events on the host element of the directive. Let's explain each with examples:
+
+### 1. @HostBinding:
+- **Purpose:** Binds a property of the host element.
+- **Usage:** Used to dynamically set values for properties of the host element.
+- **Example:**
+  
+  ```typescript
+  import { Directive, HostBinding, ElementRef } from '@angular/core';
+
+  @Directive({
+    selector: '[appHighlight]'
+  })
+  export class HighlightDirective {
+    constructor(private el: ElementRef) {}
+
+    @HostBinding('style.backgroundColor') backgroundColor: string = 'yellow';
+
+    onMouseEnter() {
+      this.backgroundColor = 'orange';
+    }
+
+    onMouseLeave() {
+      this.backgroundColor = 'yellow';
+    }
+  }
+  ```
+
+  ```html
+  <div appHighlight (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+    Highlighted Content
+  </div>
+  ```
+
+  In this example, `@HostBinding` is used to dynamically set the `backgroundColor` style property of the host element based on mouse events.
+
+### 2. @HostListener:
+- **Purpose:** Listens to events on the host element.
+- **Usage:** Used to execute methods when events occur on the host element.
+- **Example:**
+  
+  ```typescript
+  import { Directive, HostListener, ElementRef } from '@angular/core';
+
+  @Directive({
+    selector: '[appClick]'
+  })
+  export class ClickDirective {
+    constructor(private el: ElementRef) {}
+
+    @HostListener('click') onClick() {
+      alert('Element clicked!');
+    }
+  }
+  ```
+
+  ```html
+  <button appClick>Click me</button>
+  ```
+
+  In this example, `@HostListener` listens to the click event on the host element (in this case, a button) and triggers the `onClick()` method.
+
+### Summary:
+- `@HostBinding` is used to bind properties of the host element dynamically.
+- `@HostListener` is used to listen to events on the host element and execute methods accordingly.
+- Both decorators are commonly used in Angular directives to interact with the host element in a declarative and intuitive way, enhancing the behavior and appearance of DOM elements.
+
+</details>   
