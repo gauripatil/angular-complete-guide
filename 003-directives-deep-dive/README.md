@@ -188,3 +188,177 @@ Overall, using the Renderer in attribute directives helps ensure platform indepe
 - Both decorators are commonly used in Angular directives to interact with the host element in a declarative and intuitive way, enhancing the behavior and appearance of DOM elements.
 
 </details>   
+
+## 4. Custom Structural Directives
+
+<details>
+   <summary>
+   
+   <ul>
+     <li>Custom Structural Directives examples</li>
+      <li>Unless, Repeat, DelayedRenderer, Even, RoleBasedAccess</li>
+   </ul>
+      
+   </summary>
+   
+Certainly! Here are five examples of custom structural directives in Angular:
+
+### 1. UnlessDirective:
+This directive conditionally removes or adds its host element based on a given condition.
+
+```typescript
+import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+
+@Directive({
+  selector: '[appUnless]'
+})
+export class UnlessDirective {
+  constructor(
+    private templateRef: TemplateRef<any>,
+    private viewContainer: ViewContainerRef
+  ) {}
+
+  @Input() set appUnless(condition: boolean) {
+    if (!condition) {
+      this.viewContainer.createEmbeddedView(this.templateRef);
+    } else {
+      this.viewContainer.clear();
+    }
+  }
+}
+```
+
+```html
+<div *appUnless="isError">
+  Content to display unless isError is true.
+</div>
+```
+
+### 2. RepeatDirective:
+This directive repeats a template for each item in a collection.
+
+```typescript
+import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+
+@Directive({
+  selector: '[appRepeat]'
+})
+export class RepeatDirective {
+  constructor(
+    private templateRef: TemplateRef<any>,
+    private viewContainer: ViewContainerRef
+  ) {}
+
+  @Input() set appRepeat(count: number) {
+    for (let i = 0; i < count; i++) {
+      this.viewContainer.createEmbeddedView(this.templateRef);
+    }
+  }
+}
+```
+
+```html
+<ng-template appRepeat="5">
+  <p>This paragraph will be repeated 5 times.</p>
+</ng-template>
+```
+
+### 3. DelayedRenderDirective:
+This directive delays the rendering of its host element until a condition is met.
+
+```typescript
+import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+
+@Directive({
+  selector: '[appDelayedRender]'
+})
+export class DelayedRenderDirective {
+  constructor(
+    private templateRef: TemplateRef<any>,
+    private viewContainer: ViewContainerRef
+  ) {}
+
+  @Input() set appDelayedRender(condition: boolean) {
+    if (condition) {
+      this.viewContainer.createEmbeddedView(this.templateRef);
+    } else {
+      this.viewContainer.clear();
+    }
+  }
+}
+```
+
+```html
+<div *appDelayedRender="isLoading">
+  Loading...
+</div>
+```
+
+### 4. EvenDirective:
+This directive conditionally applies a template to even-indexed elements in a list.
+
+```typescript
+import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+
+@Directive({
+  selector: '[appEven]'
+})
+export class EvenDirective {
+  constructor(
+    private templateRef: TemplateRef<any>,
+    private viewContainer: ViewContainerRef
+  ) {}
+
+  @Input() set appEven(condition: boolean) {
+    if (condition) {
+      this.viewContainer.createEmbeddedView(this.templateRef);
+    } else {
+      this.viewContainer.clear();
+    }
+  }
+}
+```
+
+```html
+<ul>
+  <li *ngFor="let item of items" [appEven]="item % 2 === 0">
+    {{ item }}
+  </li>
+</ul>
+```
+
+### 5. RoleBasedAccessDirective:
+This directive conditionally renders content based on the user's role.
+
+```typescript
+import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+
+@Directive({
+  selector: '[appRoleBasedAccess]'
+})
+export class RoleBasedAccessDirective {
+  constructor(
+    private templateRef: TemplateRef<any>,
+    private viewContainer: ViewContainerRef
+  ) {}
+
+  @Input() set appRoleBasedAccess(role: string) {
+    const userRoles: string[] = ['admin', 'manager', 'user']; // Example roles
+    if (userRoles.includes(role)) {
+      this.viewContainer.createEmbeddedView(this.templateRef);
+    } else {
+      this.viewContainer.clear();
+    }
+  }
+}
+```
+
+```html
+<div *appRoleBasedAccess="'admin'">
+  Admin Panel
+</div>
+```
+
+These custom structural directives illustrate how you can create flexible and reusable templates in Angular by dynamically controlling the structure of the DOM based on various conditions or inputs.
+
+</details>
