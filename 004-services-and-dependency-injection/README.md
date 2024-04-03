@@ -80,3 +80,33 @@ Angular's DI system follows a hierarchical injection pattern, where services can
 Angular's dependency injection makes it easy to write unit tests for services by providing mock implementations or using dependency injection tokens to replace real dependencies with test doubles.
 
 Overall, services and dependency injection are core concepts in Angular that enable efficient sharing of functionality and data across different parts of an application while promoting modularity, testability, and maintainability.
+
+
+### Angular service instances and various scenarios
+In Angular, the number of instances of a service created and how they are handled depend on how the service is provided. Angular supports different methods of providing services, each affecting the lifecycle and sharing behavior of the service instances. Here's how Angular handles service instances in various scenarios:
+
+1. **Singleton Services (provided in root)**:
+   - When a service is provided at the root level (using the `providedIn: 'root'` syntax or `@Injectable({ providedIn: 'root' })` decorator), Angular creates a single instance of the service for the entire application.
+   - This instance is shared across all components, directives, and other services that inject it.
+
+2. **Module-Level Services**:
+   - When a service is provided at the module level (by adding it to the `providers` array of a module), Angular creates a single instance of the service for the entire module.
+   - This instance is shared among all components, directives, and other services within that module.
+
+3. **Component-Level Services**:
+   - When a service is provided at the component level (by adding it to the `providers` array of a component's metadata), Angular creates a new instance of the service for each instance of the component.
+   - Each component gets its own instance of the service, isolated from other components.
+
+4. **Lazy-Loaded Modules**:
+   - When a module is lazy-loaded, Angular creates a new instance of any services provided at the module level.
+   - This ensures that lazy-loaded modules have their own separate instances of services, maintaining encapsulation and isolation.
+
+5. **Factory Providers**:
+   - Angular allows services to be provided using factory functions, which can dynamically determine how instances are created.
+   - By defining a factory provider, you can customize the creation and lifecycle of service instances based on specific criteria or conditions.
+
+6. **Injection Token Overrides**:
+   - Angular provides the ability to override service instances using injection tokens.
+   - This allows you to replace a service instance with a different implementation or a mock instance, useful for testing or providing alternative implementations based on runtime conditions.
+
+Overall, Angular's dependency injection system ensures that services are created and managed in a way that promotes modularity, encapsulation, and reusability. Depending on where and how a service is provided, Angular handles service instances accordingly to maintain the desired behavior and lifecycle throughout the application.
