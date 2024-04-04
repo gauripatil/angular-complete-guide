@@ -1,8 +1,15 @@
-### Services & Dependency Injection
+# Services & Dependency Injection
 
-![Screenshot 2024-03-31 at 9 42 39 PM](https://github.com/gauripatil/angular-complete-guide/assets/3206551/747a1b3a-f328-41c5-b268-e942e2ba1802)
-
-
+## 1. Explain Angular Service & Dependency Injection
+<details>
+   <summary>
+   
+   <ul>
+     <li>Angular Service & Dependency Injection</li>
+   </ul>
+      
+   </summary>
+   
 In Angular, a service is a TypeScript class that encapsulates functionality that can be shared across multiple parts of an application. Services are commonly used to perform tasks such as data fetching, business logic processing, authentication, logging, and more. They promote code reusability, modularity, and maintainability by centralizing common functionality that multiple components or modules may require.
 
 Dependency injection (DI) is a design pattern used by Angular to manage the dependencies of a component or service. With DI, Angular's injector system automatically provides the necessary dependencies to a component or service when it is created, rather than requiring the component or service to create its dependencies directly. This makes components and services more modular and easier to test, as dependencies can be easily swapped out or mocked.
@@ -15,7 +22,27 @@ In simpler terms:
 
 In summary, services and dependency injection are fundamental concepts in Angular that promote code organization, reusability, and maintainability by allowing common functionality to be encapsulated in services and injected into components as needed.
 
+![Screenshot 2024-03-31 at 9 42 39 PM](https://github.com/gauripatil/angular-complete-guide/assets/3206551/747a1b3a-f328-41c5-b268-e942e2ba1802)
 
+
+</details>
+
+## 2. How Angular Service & Dependency Injection works
+<details>
+   <summary>
+   
+   <ul>
+     <li>Creating service</li>
+     <li>Registering a service</li>
+     <li>Injecting a service</li>
+     <li>Dependency Injection</li>
+     <li>Singleton Services</li>
+     <li>Hierarchical Injection</li>
+     <li>Testing Services</li>
+   </ul>
+      
+   </summary>
+   
 In Angular, services are classes that are responsible for providing functionality that can be shared across components, directives, and other services within an application. They are commonly used for tasks such as data fetching, state management, authentication, logging, and more. Dependency injection (DI) is a design pattern used by Angular to provide services to components and other parts of the application.
 
 Here's how service and dependency injection work in Angular:
@@ -80,9 +107,24 @@ Angular's DI system follows a hierarchical injection pattern, where services can
 Angular's dependency injection makes it easy to write unit tests for services by providing mock implementations or using dependency injection tokens to replace real dependencies with test doubles.
 
 Overall, services and dependency injection are core concepts in Angular that enable efficient sharing of functionality and data across different parts of an application while promoting modularity, testability, and maintainability.
+</details>
 
+## 3. Angular service instances and various scenarios
 
-### Angular service instances and various scenarios
+<details>
+   <summary>
+   
+   <ul>
+     <li>Singleton Services (provided in root)</li>
+     <li>Module-Level Services</li>
+     <li>Component-Level Services</li>
+     <li>Lazy-Loaded Modules</li>
+     <li>Factory Providers</li>
+     <li>Injection Token Overrides</li>
+   </ul>
+      
+   </summary>
+   
 In Angular, the number of instances of a service created and how they are handled depend on how the service is provided. Angular supports different methods of providing services, each affecting the lifecycle and sharing behavior of the service instances. Here's how Angular handles service instances in various scenarios:
 
 1. **Singleton Services (provided in root)**:
@@ -110,3 +152,5 @@ In Angular, the number of instances of a service created and how they are handle
    - This allows you to replace a service instance with a different implementation or a mock instance, useful for testing or providing alternative implementations based on runtime conditions.
 
 Overall, Angular's dependency injection system ensures that services are created and managed in a way that promotes modularity, encapsulation, and reusability. Depending on where and how a service is provided, Angular handles service instances accordingly to maintain the desired behavior and lifecycle throughout the application.
+
+</details>
