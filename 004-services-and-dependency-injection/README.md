@@ -488,3 +488,96 @@ Factory providers give you flexibility in how service instances are created, all
 Injection token overrides give you fine-grained control over the dependencies of your Angular application, allowing you to replace or customize the behavior of services without modifying their implementation. This promotes flexibility and modularity, making it easier to test and maintain your codebase.
 
 </details>
+
+## 10. How to use services for cross-component communication
+<details>
+   <summary>
+      <ul>
+         <li>Create service</li>
+         <li>Sender Component</li>
+         <li>Receiver Component</li>
+      </ul>
+   </summary>
+   In Angular, services are often used as intermediaries for cross-component communication. They provide a centralized way for components to interact with each other without directly coupling them together. Here's how you can use services for cross-component communication:
+
+### 1. Define a Service:
+Create a service that will handle the communication logic between components. This service will typically contain methods or properties to facilitate data exchange.
+
+```typescript
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+  // Subject for sending data between components
+  private dataSubject = new Subject<any>();
+
+  // Observable to subscribe to for receiving data
+  data$ = this.dataSubject.asObservable();
+
+  // Method to send data to other components
+  sendData(data: any) {
+    this.dataSubject.next(data);
+  }
+}
+```
+
+### 2. Sender Component:
+Inject the service into the sender component and call the appropriate method to send data.
+
+```typescript
+import { Component } from '@angular/core';
+import { DataService } from './data.service';
+
+@Component({
+  selector: 'app-sender',
+  template: `
+    <button (click)="sendData()">Send Data</button>
+  `
+})
+export class SenderComponent {
+  constructor(private dataService: DataService) {}
+
+  sendData() {
+    const dataToSend = { message: 'Hello from sender component!' };
+    this.dataService.sendData(dataToSend);
+  }
+}
+```
+
+### 3. Receiver Component:
+Inject the service into the receiver component and subscribe to the observable to receive data.
+
+```typescript
+import { Component, OnDestroy } from '@angular/core';
+import { DataService } from './data.service';
+import { Subscription } from 'rxjs';
+
+@Component({
+  selector: 'app-receiver',
+  template: `
+    <div>{{ receivedData?.message }}</div>
+  `
+})
+export class ReceiverComponent implements OnDestroy {
+  receivedData: any;
+  private dataSubscription: Subscription;
+
+  constructor(private dataService: DataService) {
+    // Subscribe to the data observable
+    this.dataSubscription = this.dataService.data$.subscribe(data => {
+      this.receivedData = data;
+    });
+  }
+
+  ngOnDestroy() {
+    // Unsubscribe to avoid memory leaks
+    this.dataSubscription.unsubscribe();
+  }
+}
+```
+
+In this setup, when the sender component calls `sendData()` method on the `DataService`, the data is sent through the `dataSubject`. Any component that is subscribed to the `data$` observable will receive this data and can react accordingly. This way, components remain decoupled and can communicate without direct dependencies on each other. Additionally, the use of observables ensures that components are updated asynchronously when new data is received.
+</details>
