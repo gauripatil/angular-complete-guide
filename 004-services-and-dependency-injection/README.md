@@ -584,7 +584,16 @@ In this setup, when the sender component calls `sendData()` method on the `DataS
 
 
 ## 11. Alternative of Service Injection Syntax
+
 <details>
+
+<summary>
+   <ul>
+      <li>Using Constructor</li>
+      <li>Using inject()</li>
+   </ul>
+   
+</summary>
    
 Injecting services (or, in general: dependencies) into components via the constructor functions is the most common way of perform such injections. You'll see this approach in most Angular projects you'll be working on.
 
@@ -615,4 +624,5 @@ export class AccountComponent {
 }
 ```
 It's totally up to you, which approach you prefer. In this course (and, as mentioned, in most projects), we'll use the constructor approach.
+
 </details>
