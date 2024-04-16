@@ -626,3 +626,9 @@ export class AccountComponent {
 It's totally up to you, which approach you prefer. In this course (and, as mentioned, in most projects), we'll use the constructor approach.
 
 </details>
+
+
+## 12 Hierarchical injector
+![Screenshot 2024-04-16 at 9 32 09 PM](https://github.com/gauripatil/angular-complete-guide/assets/3206551/68908d58-60d1-4126-9c7d-c96f0decbf43)
+
+
