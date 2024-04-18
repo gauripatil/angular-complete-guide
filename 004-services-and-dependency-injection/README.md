@@ -1,4 +1,4 @@
-# Services & Dependency Injection
+## Services & Dependency Injection
 
 ## 1. Explain Angular Service & Dependency Injection
 <details>
@@ -630,5 +630,8 @@ It's totally up to you, which approach you prefer. In this course (and, as menti
 
 ## 12 Hierarchical injector
 ![Screenshot 2024-04-16 at 9 32 09 PM](https://github.com/gauripatil/angular-complete-guide/assets/3206551/68908d58-60d1-4126-9c7d-c96f0decbf43)
+
+
+## 13. How to handle failure of http request
 
 
