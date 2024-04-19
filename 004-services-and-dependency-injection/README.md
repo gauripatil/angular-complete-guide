@@ -634,4 +634,68 @@ It's totally up to you, which approach you prefer. In this course (and, as menti
 
 ## 13. How to handle failure of http request
 
+## 14. How to handle multiple concurrent api calls & proceed if all are succeeded else throw error - forkJoin
+To make 10 simultaneous API calls and cancel the rest if any one of them fails, you can utilize Angular's `HttpClient` module along with RxJS observables and operators. Here's a general approach to achieve this:
+
+1. **Import Required Modules**: Import `HttpClient` module and RxJS operators.
+
+```typescript
+import { HttpClient } from '@angular/common/http';
+import { Observable, forkJoin, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+```
+
+2. **Create API Calls**: Define 10 API calls that you want to make simultaneously. Each API call should return an observable.
+
+```typescript
+// Example API calls
+getApi1(): Observable<any> {
+  return this.http.get('API_ENDPOINT_1');
+}
+
+getApi2(): Observable<any> {
+  return this.http.get('API_ENDPOINT_2');
+}
+
+// Define similar methods for other API calls (getApi3(), getApi4(), ..., getApi10())
+```
+
+3. **Make Simultaneous API Calls**: Use `forkJoin` operator to make simultaneous API calls.
+
+```typescript
+makeSimultaneousCalls(): Observable<any[]> {
+  const calls = [
+    this.getApi1(),
+    this.getApi2(),
+    // Include other API calls here (getApi3(), getApi4(), ..., getApi10())
+  ];
+
+  return forkJoin(calls).pipe(
+    catchError(error => {
+      console.error('One of the API calls failed:', error);
+      return throwError(error); // Propagate the error
+    })
+  );
+}
+```
+
+4. **Subscribe to the API Calls**: Subscribe to the `makeSimultaneousCalls()` method in your component.
+
+```typescript
+this.apiService.makeSimultaneousCalls().subscribe(
+  (responses: any[]) => {
+    // Handle successful responses from all API calls
+    console.log('All API calls succeeded:', responses);
+  },
+  error => {
+    // Handle error from any one of the API calls
+    console.error('At least one API call failed:', error);
+  }
+);
+```
+
+In this setup, the `forkJoin` operator is used to execute multiple observables simultaneously and wait for all of them to complete. If any one of the API calls fails, the error handler inside the `catchError` operator will be triggered, and it will log the error and propagate it further. The `subscribe` method then handles the successful responses and errors accordingly.
+
+This approach ensures that all API calls are made concurrently, and if any one of them fails, the rest of the API calls are canceled, and the error is handled appropriately.
+
 
