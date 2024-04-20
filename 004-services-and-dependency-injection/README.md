@@ -634,7 +634,16 @@ It's totally up to you, which approach you prefer. In this course (and, as menti
 
 ## 13. How to handle failure of http request
 
-## 14. How to handle multiple concurrent api calls & proceed if all are succeeded else throw error - forkJoin
+## 14. Handle multiple concurrent api calls & proceed if all are succeeded else throw error - forkJoin
+
+<details>
+
+   <summary>
+      <ul>
+         <li>forkJoin</li>
+      </ul>   
+   </summary>
+   
 To make 10 simultaneous API calls and cancel the rest if any one of them fails, you can utilize Angular's `HttpClient` module along with RxJS observables and operators. Here's a general approach to achieve this:
 
 1. **Import Required Modules**: Import `HttpClient` module and RxJS operators.
@@ -698,4 +707,102 @@ In this setup, the `forkJoin` operator is used to execute multiple observables s
 
 This approach ensures that all API calls are made concurrently, and if any one of them fails, the rest of the API calls are canceled, and the error is handled appropriately.
 
+</details>
 
+
+## 15. Using RxJS operators - Handle success & failure of HTTP request
+
+<details>
+
+<summary>
+   <ul>
+      <li>map</li>
+      <li>catchError</li>
+   </ul>
+</summary>
+   
+Certainly! RxJS operators provide powerful capabilities for handling success and failure scenarios when making HTTP requests in Angular services. Here's an example demonstrating how to use RxJS operators to handle both success and failure scenarios in HTTP request handling:
+
+Suppose you have a service called `DataService` that makes an HTTP GET request to fetch data from a backend API. You want to handle both successful responses and error responses gracefully.
+
+First, let's import the required modules and define the `DataService`:
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+
+  constructor(private http: HttpClient) { }
+
+  fetchData(): Observable<any> {
+    return this.http.get<any>('https://api.example.com/data').pipe(
+      map(response => response.data), // Extract data from the response
+      catchError(error => {
+        console.error('HTTP request failed:', error);
+        return throwError('Failed to fetch data'); // Propagate the error
+      })
+    );
+  }
+}
+```
+
+In the `fetchData()` method:
+
+- We make an HTTP GET request to `'https://api.example.com/data'`.
+- We use the `map` operator to extract the `data` property from the response object.
+- We use the `catchError` operator to handle errors. If the HTTP request fails, we log the error and propagate a custom error message using `throwError`.
+
+Now, let's use this `DataService` in a component and subscribe to the observable returned by `fetchData()`:
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { DataService } from './data.service';
+
+@Component({
+  selector: 'app-data',
+  template: `
+    <div *ngIf="data; else loading">
+      <h2>Data</h2>
+      <pre>{{ data | json }}</pre>
+    </div>
+    <ng-template #loading>
+      <p>Loading...</p>
+    </ng-template>
+    <p *ngIf="errorMessage">{{ errorMessage }}</p>
+  `
+})
+export class DataComponent implements OnInit {
+  data: any;
+  errorMessage: string;
+
+  constructor(private dataService: DataService) { }
+
+  ngOnInit(): void {
+    this.dataService.fetchData().subscribe(
+      response => {
+        this.data = response;
+      },
+      error => {
+        this.errorMessage = error;
+      }
+    );
+  }
+}
+```
+
+In the `DataComponent`:
+
+- We inject the `DataService` into the constructor.
+- In the `ngOnInit` lifecycle hook, we call the `fetchData()` method of the `DataService` and subscribe to the observable.
+- If the request is successful, we assign the response data to the `data` property.
+- If the request fails, we assign the error message to the `errorMessage` property, which will be displayed in the template.
+
+With this setup, you're effectively handling both success and failure scenarios when making HTTP requests using RxJS operators in Angular services. This approach ensures that your application provides meaningful feedback to users in case of errors and delivers a smooth user experience overall.
+
+</details>
