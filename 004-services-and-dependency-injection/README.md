@@ -806,3 +806,95 @@ In the `DataComponent`:
 With this setup, you're effectively handling both success and failure scenarios when making HTTP requests using RxJS operators in Angular services. This approach ensures that your application provides meaningful feedback to users in case of errors and delivers a smooth user experience overall.
 
 </details>
+
+
+
+## 16. Promise Vs Observables
+
+<details>
+
+<summary>
+   <ul>
+      <li>Use Case</li>
+      <li>Reactivity</li>
+      <li>Error Handling</li>
+      <li>Cancellation</li>
+   </ul>
+</summary>
+Promises and observables are both used for handling asynchronous operations in JavaScript and are commonly used in Angular applications. However, they have some key differences in terms of functionality and usage. Let's compare promises and observables and provide examples for each:
+
+### Promises:
+
+- **Single Value**: Promises represent a single value that will be available in the future, either successfully (resolved) or with an error (rejected).
+- **Eager Evaluation**: Promises are eager, meaning they execute as soon as they are created.
+- **Non-Cancellable**: Once a promise is settled (either resolved or rejected), its state cannot be changed.
+- **Basic Error Handling**: Promises handle errors using the `catch` method or the second argument of the `then` method.
+
+Example:
+
+```javascript
+// Example: Using Promises
+const myPromise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    const randomNumber = Math.random();
+    if (randomNumber > 0.5) {
+      resolve(randomNumber);
+    } else {
+      reject('Random number is too small');
+    }
+  }, 1000);
+});
+
+myPromise.then(
+  (result) => {
+    console.log('Promise resolved with result:', result);
+  },
+  (error) => {
+    console.error('Promise rejected with error:', error);
+  }
+);
+```
+
+### Observables:
+
+- **Multiple Values Over Time**: Observables represent a stream of values that can arrive asynchronously over time, including zero, one, or multiple values, and can be completed or errored.
+- **Lazy Evaluation**: Observables are lazy, meaning they do not execute until someone subscribes to them.
+- **Cancellable**: Observables can be cancelled by unsubscribing from them.
+- **Advanced Error Handling**: Observables provide powerful error handling capabilities, including `catchError` and retry mechanisms.
+
+Example:
+
+```typescript
+// Example: Using Observables (Angular HttpClient)
+import { HttpClient } from '@angular/common/http';
+
+// Inject HttpClient in constructor
+constructor(private http: HttpClient) {}
+
+// Making an HTTP GET request
+const observable = this.http.get('https://api.example.com/data');
+
+// Subscribing to the observable to receive data
+observable.subscribe(
+  (data) => {
+    console.log('Received data:', data);
+  },
+  (error) => {
+    console.error('An error occurred:', error);
+  },
+  () => {
+    console.log('Observable completed');
+  }
+);
+```
+
+### Comparison:
+
+- **Use Case**: Use promises for single asynchronous operations that will produce only one value. Use observables for handling streams of data or events over time, especially in reactive programming scenarios.
+- **Error Handling**: Promises have basic error handling with the `catch` method, while observables provide more advanced error handling capabilities.
+- **Cancellation**: Observables can be cancelled by unsubscribing, whereas promises cannot be cancelled once created.
+- **Reactivity**: Observables provide a more reactive and flexible approach, allowing you to perform complex transformations, combine multiple streams, and handle backpressure efficiently.
+
+In Angular applications, observables are preferred for handling asynchronous operations, such as HTTP requests and user interactions, due to their reactive nature and powerful capabilities. However, promises are still commonly used in JavaScript for simpler asynchronous tasks that produce only one value.
+
+</details>
