@@ -935,3 +935,72 @@ In this example:
 2. We consume the promise using the `then` method. The `then` method takes two callback functions: one to handle the resolved value (`result`) and another to handle the rejected error (`error`). If the promise is resolved, the first callback is executed; if it's rejected, the second callback is executed.
 
 Promises provide a cleaner and more flexible way to handle asynchronous code compared to traditional callback-based approaches. They allow you to chain asynchronous operations together, handle errors more effectively, and avoid callback hell.
+
+
+
+In Angular, you can handle HTTP errors globally by implementing an HTTP interceptor. HTTP interceptors allow you to intercept HTTP requests and responses and apply transformations to them. You can use an interceptor to catch HTTP errors and handle them in a centralized location. Here's how you can implement an HTTP error response handler using an interceptor in Angular:
+
+1. **Create an Interceptor:**
+   Create a new service to implement the HTTP interceptor. This service should implement the `HttpInterceptor` interface provided by Angular.
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+@Injectable()
+export class HttpErrorInterceptor implements HttpInterceptor {
+
+  constructor() { }
+
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        if (error.error instanceof ErrorEvent) {
+          // Client-side error
+          errorMessage = `Error: ${error.error.message}`;
+        } else {
+          // Server-side error
+          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+        }
+        console.error(errorMessage);
+        return throwError(errorMessage);
+      })
+    );
+  }
+}
+```
+
+2. **Provide the Interceptor:**
+   Provide the interceptor in the root module (`AppModule`) or in a specific module where you want to use it.
+
+```typescript
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpErrorInterceptor } from './http-error.interceptor'; // Import the interceptor
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true } // Provide the interceptor
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+3. **Handle Errors:**
+   In the `catchError` operator of the interceptor, you can handle the errors as per your application requirements. In the example above, we're logging the error message to the console and re-throwing it.
+
+With this setup, whenever an HTTP request results in an error (e.g., server error, network error), the interceptor will catch the error, handle it accordingly, and propagate the error to the subscriber. This allows you to handle HTTP errors in a centralized and consistent manner across your Angular application.
