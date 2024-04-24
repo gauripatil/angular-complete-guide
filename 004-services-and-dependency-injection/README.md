@@ -1004,3 +1004,5 @@ export class AppModule { }
    In the `catchError` operator of the interceptor, you can handle the errors as per your application requirements. In the example above, we're logging the error message to the console and re-throwing it.
 
 With this setup, whenever an HTTP request results in an error (e.g., server error, network error), the interceptor will catch the error, handle it accordingly, and propagate the error to the subscriber. This allows you to handle HTTP errors in a centralized and consistent manner across your Angular application.
+
+
