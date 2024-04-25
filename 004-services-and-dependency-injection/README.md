@@ -936,8 +936,8 @@ In this example:
 
 Promises provide a cleaner and more flexible way to handle asynchronous code compared to traditional callback-based approaches. They allow you to chain asynchronous operations together, handle errors more effectively, and avoid callback hell.
 
-
-
+## 17. Handle errors 
+<details>
 In Angular, you can handle HTTP errors globally by implementing an HTTP interceptor. HTTP interceptors allow you to intercept HTTP requests and responses and apply transformations to them. You can use an interceptor to catch HTTP errors and handle them in a centralized location. Here's how you can implement an HTTP error response handler using an interceptor in Angular:
 
 1. **Create an Interceptor:**
@@ -1006,3 +1006,4 @@ export class AppModule { }
 With this setup, whenever an HTTP request results in an error (e.g., server error, network error), the interceptor will catch the error, handle it accordingly, and propagate the error to the subscriber. This allows you to handle HTTP errors in a centralized and consistent manner across your Angular application.
 
 
+</details>
