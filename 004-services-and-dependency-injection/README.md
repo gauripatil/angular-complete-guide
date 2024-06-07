@@ -632,3 +632,378 @@ It's totally up to you, which approach you prefer. In this course (and, as menti
 ![Screenshot 2024-04-16 at 9 32 09 PM](https://github.com/gauripatil/angular-complete-guide/assets/3206551/68908d58-60d1-4126-9c7d-c96f0decbf43)
 
 
+## 13. How to handle failure of http request
+
+## 14. Handle multiple concurrent api calls & proceed if all are succeeded else throw error - forkJoin
+
+<details>
+
+   <summary>
+      <ul>
+         <li>forkJoin</li>
+      </ul>   
+   </summary>
+   
+To make 10 simultaneous API calls and cancel the rest if any one of them fails, you can utilize Angular's `HttpClient` module along with RxJS observables and operators. Here's a general approach to achieve this:
+
+1. **Import Required Modules**: Import `HttpClient` module and RxJS operators.
+
+```typescript
+import { HttpClient } from '@angular/common/http';
+import { Observable, forkJoin, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+```
+
+2. **Create API Calls**: Define 10 API calls that you want to make simultaneously. Each API call should return an observable.
+
+```typescript
+// Example API calls
+getApi1(): Observable<any> {
+  return this.http.get('API_ENDPOINT_1');
+}
+
+getApi2(): Observable<any> {
+  return this.http.get('API_ENDPOINT_2');
+}
+
+// Define similar methods for other API calls (getApi3(), getApi4(), ..., getApi10())
+```
+
+3. **Make Simultaneous API Calls**: Use `forkJoin` operator to make simultaneous API calls.
+
+```typescript
+makeSimultaneousCalls(): Observable<any[]> {
+  const calls = [
+    this.getApi1(),
+    this.getApi2(),
+    // Include other API calls here (getApi3(), getApi4(), ..., getApi10())
+  ];
+
+  return forkJoin(calls).pipe(
+    catchError(error => {
+      console.error('One of the API calls failed:', error);
+      return throwError(error); // Propagate the error
+    })
+  );
+}
+```
+
+4. **Subscribe to the API Calls**: Subscribe to the `makeSimultaneousCalls()` method in your component.
+
+```typescript
+this.apiService.makeSimultaneousCalls().subscribe(
+  (responses: any[]) => {
+    // Handle successful responses from all API calls
+    console.log('All API calls succeeded:', responses);
+  },
+  error => {
+    // Handle error from any one of the API calls
+    console.error('At least one API call failed:', error);
+  }
+);
+```
+
+In this setup, the `forkJoin` operator is used to execute multiple observables simultaneously and wait for all of them to complete. If any one of the API calls fails, the error handler inside the `catchError` operator will be triggered, and it will log the error and propagate it further. The `subscribe` method then handles the successful responses and errors accordingly.
+
+This approach ensures that all API calls are made concurrently, and if any one of them fails, the rest of the API calls are canceled, and the error is handled appropriately.
+
+</details>
+
+
+## 15. Using RxJS operators - Handle success & failure of HTTP request
+
+<details>
+
+<summary>
+   <ul>
+      <li>map</li>
+      <li>catchError</li>
+   </ul>
+</summary>
+   
+Certainly! RxJS operators provide powerful capabilities for handling success and failure scenarios when making HTTP requests in Angular services. Here's an example demonstrating how to use RxJS operators to handle both success and failure scenarios in HTTP request handling:
+
+Suppose you have a service called `DataService` that makes an HTTP GET request to fetch data from a backend API. You want to handle both successful responses and error responses gracefully.
+
+First, let's import the required modules and define the `DataService`:
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+
+  constructor(private http: HttpClient) { }
+
+  fetchData(): Observable<any> {
+    return this.http.get<any>('https://api.example.com/data').pipe(
+      map(response => response.data), // Extract data from the response
+      catchError(error => {
+        console.error('HTTP request failed:', error);
+        return throwError('Failed to fetch data'); // Propagate the error
+      })
+    );
+  }
+}
+```
+
+In the `fetchData()` method:
+
+- We make an HTTP GET request to `'https://api.example.com/data'`.
+- We use the `map` operator to extract the `data` property from the response object.
+- We use the `catchError` operator to handle errors. If the HTTP request fails, we log the error and propagate a custom error message using `throwError`.
+
+Now, let's use this `DataService` in a component and subscribe to the observable returned by `fetchData()`:
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { DataService } from './data.service';
+
+@Component({
+  selector: 'app-data',
+  template: `
+    <div *ngIf="data; else loading">
+      <h2>Data</h2>
+      <pre>{{ data | json }}</pre>
+    </div>
+    <ng-template #loading>
+      <p>Loading...</p>
+    </ng-template>
+    <p *ngIf="errorMessage">{{ errorMessage }}</p>
+  `
+})
+export class DataComponent implements OnInit {
+  data: any;
+  errorMessage: string;
+
+  constructor(private dataService: DataService) { }
+
+  ngOnInit(): void {
+    this.dataService.fetchData().subscribe(
+      response => {
+        this.data = response;
+      },
+      error => {
+        this.errorMessage = error;
+      }
+    );
+  }
+}
+```
+
+In the `DataComponent`:
+
+- We inject the `DataService` into the constructor.
+- In the `ngOnInit` lifecycle hook, we call the `fetchData()` method of the `DataService` and subscribe to the observable.
+- If the request is successful, we assign the response data to the `data` property.
+- If the request fails, we assign the error message to the `errorMessage` property, which will be displayed in the template.
+
+With this setup, you're effectively handling both success and failure scenarios when making HTTP requests using RxJS operators in Angular services. This approach ensures that your application provides meaningful feedback to users in case of errors and delivers a smooth user experience overall.
+
+</details>
+
+
+
+## 16. Promise Vs Observables
+
+<details>
+
+<summary>
+   <ul>
+      <li>Use Case</li>
+      <li>Reactivity</li>
+      <li>Error Handling</li>
+      <li>Cancellation</li>
+   </ul>
+</summary>
+Promises and observables are both used for handling asynchronous operations in JavaScript and are commonly used in Angular applications. However, they have some key differences in terms of functionality and usage. Let's compare promises and observables and provide examples for each:
+
+### Promises:
+
+- **Single Value**: Promises represent a single value that will be available in the future, either successfully (resolved) or with an error (rejected).
+- **Eager Evaluation**: Promises are eager, meaning they execute as soon as they are created.
+- **Non-Cancellable**: Once a promise is settled (either resolved or rejected), its state cannot be changed.
+- **Basic Error Handling**: Promises handle errors using the `catch` method or the second argument of the `then` method.
+
+Example:
+
+```javascript
+// Example: Using Promises
+const myPromise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    const randomNumber = Math.random();
+    if (randomNumber > 0.5) {
+      resolve(randomNumber);
+    } else {
+      reject('Random number is too small');
+    }
+  }, 1000);
+});
+
+myPromise.then(
+  (result) => {
+    console.log('Promise resolved with result:', result);
+  },
+  (error) => {
+    console.error('Promise rejected with error:', error);
+  }
+);
+```
+
+### Observables:
+
+- **Multiple Values Over Time**: Observables represent a stream of values that can arrive asynchronously over time, including zero, one, or multiple values, and can be completed or errored.
+- **Lazy Evaluation**: Observables are lazy, meaning they do not execute until someone subscribes to them.
+- **Cancellable**: Observables can be cancelled by unsubscribing from them.
+- **Advanced Error Handling**: Observables provide powerful error handling capabilities, including `catchError` and retry mechanisms.
+
+Example:
+
+```typescript
+// Example: Using Observables (Angular HttpClient)
+import { HttpClient } from '@angular/common/http';
+
+// Inject HttpClient in constructor
+constructor(private http: HttpClient) {}
+
+// Making an HTTP GET request
+const observable = this.http.get('https://api.example.com/data');
+
+// Subscribing to the observable to receive data
+observable.subscribe(
+  (data) => {
+    console.log('Received data:', data);
+  },
+  (error) => {
+    console.error('An error occurred:', error);
+  },
+  () => {
+    console.log('Observable completed');
+  }
+);
+```
+
+### Comparison:
+
+- **Use Case**: Use promises for single asynchronous operations that will produce only one value. Use observables for handling streams of data or events over time, especially in reactive programming scenarios.
+- **Error Handling**: Promises have basic error handling with the `catch` method, while observables provide more advanced error handling capabilities.
+- **Cancellation**: Observables can be cancelled by unsubscribing, whereas promises cannot be cancelled once created.
+- **Reactivity**: Observables provide a more reactive and flexible approach, allowing you to perform complex transformations, combine multiple streams, and handle backpressure efficiently.
+
+In Angular applications, observables are preferred for handling asynchronous operations, such as HTTP requests and user interactions, due to their reactive nature and powerful capabilities. However, promises are still commonly used in JavaScript for simpler asynchronous tasks that produce only one value.
+
+</details>
+
+
+A promise in JavaScript represents the eventual completion or failure of an asynchronous operation and its resulting value. It is a wrapper around a value or an operation that may not be available immediately, allowing you to handle the result asynchronously. Promises are commonly used for asynchronous operations such as fetching data from a server, reading a file, or performing any other operation that takes time to complete.
+
+Here's a basic example of a promise in JavaScript:
+
+```javascript
+// Example 1: Creating a promise
+const myPromise = new Promise((resolve, reject) => {
+  // Simulate an asynchronous operation
+  setTimeout(() => {
+    const randomNumber = Math.random();
+    if (randomNumber > 0.5) {
+      resolve(randomNumber); // Resolve the promise with a random number if it's greater than 0.5
+    } else {
+      reject('Random number is too small'); // Reject the promise if the random number is too small
+    }
+  }, 1000); // Simulate a delay of 1 second
+});
+
+// Example 2: Consuming a promise
+myPromise.then(
+  (result) => {
+    console.log('Promise resolved with result:', result);
+  },
+  (error) => {
+    console.error('Promise rejected with error:', error);
+  }
+);
+```
+
+In this example:
+
+1. We create a promise `myPromise` using the `Promise` constructor. The promise takes a function with two parameters: `resolve` and `reject`. Inside this function, we perform an asynchronous operation (in this case, we generate a random number after a delay of 1 second) and either call `resolve` with the result if the operation is successful, or `reject` with an error if it fails.
+2. We consume the promise using the `then` method. The `then` method takes two callback functions: one to handle the resolved value (`result`) and another to handle the rejected error (`error`). If the promise is resolved, the first callback is executed; if it's rejected, the second callback is executed.
+
+Promises provide a cleaner and more flexible way to handle asynchronous code compared to traditional callback-based approaches. They allow you to chain asynchronous operations together, handle errors more effectively, and avoid callback hell.
+
+## 17. Handle errors 
+<details>
+In Angular, you can handle HTTP errors globally by implementing an HTTP interceptor. HTTP interceptors allow you to intercept HTTP requests and responses and apply transformations to them. You can use an interceptor to catch HTTP errors and handle them in a centralized location. Here's how you can implement an HTTP error response handler using an interceptor in Angular:
+
+1. **Create an Interceptor:**
+   Create a new service to implement the HTTP interceptor. This service should implement the `HttpInterceptor` interface provided by Angular.
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+@Injectable()
+export class HttpErrorInterceptor implements HttpInterceptor {
+
+  constructor() { }
+
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        if (error.error instanceof ErrorEvent) {
+          // Client-side error
+          errorMessage = `Error: ${error.error.message}`;
+        } else {
+          // Server-side error
+          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+        }
+        console.error(errorMessage);
+        return throwError(errorMessage);
+      })
+    );
+  }
+}
+```
+
+2. **Provide the Interceptor:**
+   Provide the interceptor in the root module (`AppModule`) or in a specific module where you want to use it.
+
+```typescript
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpErrorInterceptor } from './http-error.interceptor'; // Import the interceptor
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true } // Provide the interceptor
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+3. **Handle Errors:**
+   In the `catchError` operator of the interceptor, you can handle the errors as per your application requirements. In the example above, we're logging the error message to the console and re-throwing it.
+
+With this setup, whenever an HTTP request results in an error (e.g., server error, network error), the interceptor will catch the error, handle it accordingly, and propagate the error to the subscriber. This allows you to handle HTTP errors in a centralized and consistent manner across your Angular application.
+
+
+</details>
