@@ -1,0 +1,10 @@
+<h3>Inactive Users</h3>
+<ul class="list-group">
+  
+
+  @for(userElem of users; track userElem ) {
+        <li class="list-group-item">
+            {{ userElem }} | <a href="#" (click)="onSetToActive($index)">Set to Active</a>
+        </li>
+  }
+</ul>

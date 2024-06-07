@@ -1,0 +1,12 @@
+<h3>Active Users</h3>
+<ul class="list-group">
+  
+
+    @for(userEle of users; track userEle) {
+        <li class="list-group-item">
+            {{ userEle }} | <a href="#" (click)="onSetToInactive($index)">Set to Inactive</a>
+        </li>
+    }   
+    <!-- @for (recipeElem of recipes; track recipeElem.name) { -->
+  
+</ul>
